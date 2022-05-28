@@ -13,5 +13,7 @@ web-build/
 # macOS
 .DS_Store
 tutor.md
-src
 sandbox.js
+.copy
+.idea
+.vscode
