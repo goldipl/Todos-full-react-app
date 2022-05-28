@@ -16,7 +16,7 @@ function LoginScreen({ navigation }) {
       <Button title={"go back"} onPress={() => navigation.goBack()} />
       <Button
         title={"Dashboard"}
-        onPress={() => navigation.navigate(ROUTES.MAIN.DASHBOARD)}
+        onPress={() => navigation.navigate(ROUTES.HOME.INDEX)}
       />
     </View>
   );

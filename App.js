@@ -15,6 +15,8 @@ export default function App() {
       try {
         await SplashScreen.preventAutoHideAsync();
         await Font.loadAsync(Entypo.font);
+        // tutaj wszelkie strzaly do api, ktore sa potrzebne do startu apki
+        // ewentualnie odzyskiwanie tokena auth
       } catch (error) {
         console.warn(error);
       } finally {
