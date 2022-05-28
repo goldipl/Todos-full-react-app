@@ -1,7 +1,11 @@
 import React from "react";
 import { View, Text } from "react-native";
 
+import { useTodos } from "../../hooks/useTodos";
+
 function DashboardScreen() {
+  const { data, isLoading } = useTodos();
+
   return (
     <View
       style={{
