@@ -4,6 +4,7 @@ import { View, Text, TextInput as RNTextInput, StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   root: {
     paddingVertical: 16,
+    width: "100%",
   },
   rootError: {
     paddingBottom: 0,
@@ -51,8 +52,6 @@ function TextInput({
   onFocus,
 }) {
   const [highlight, setHighlight] = useState(false);
-
-  console.log(error);
 
   return (
     <View style={[styles.root, error ? styles.rootError : {}]}>
