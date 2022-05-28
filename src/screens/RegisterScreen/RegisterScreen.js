@@ -3,11 +3,12 @@ import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-// import ROUTES from "../../constants/routes";
+import ROUTES from "../../constants/routes";
 import ChevronLeft from "../../../assets/icons/ChevronLeft";
 import ChevronRight from "../../../assets/icons/ChevronRight";
 
 import { IconButton, Button, TextInput } from "../../components/atoms";
+import { useRegister } from "../../hooks/useRegister";
 
 import { initialValues, validationSchema } from "./validationSchema";
 
@@ -43,14 +44,16 @@ const styles = StyleSheet.create({
 });
 
 function RegisterScreen({ navigation }) {
+  const register = useRegister();
   const { control, handleSubmit } = useForm({
     initialValues,
     resolver: yupResolver(validationSchema),
   });
 
-  function onSubmit(data) {
-    console.log(data);
-    // onPress={() => navigation.navigate(ROUTES.MAIN.LOGIN)}
+  async function onSubmit(data) {
+    await register.mutateAsync(data).then(() => {
+      navigation.navigate(ROUTES.MAIN.LOGIN);
+    });
   }
 
   return (

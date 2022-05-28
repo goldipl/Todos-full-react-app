@@ -3,7 +3,10 @@ import { View, Text, TextInput as RNTextInput, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   root: {
-    paddingVertical: 12,
+    paddingVertical: 16,
+  },
+  rootError: {
+    paddingBottom: 0,
   },
   input: {
     height: 56,
@@ -16,6 +19,9 @@ const styles = StyleSheet.create({
     color: "#6D6D78",
     fontSize: 15,
   },
+  inputError: {
+    borderColor: "red",
+  },
   inputHighlight: {
     borderColor: "#52C3FF",
   },
@@ -23,6 +29,14 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#6D6D78",
     paddingBottom: 10,
+  },
+  errorLabel: {
+    color: "red",
+  },
+  errorMessage: {
+    color: "red",
+    fontSize: 12,
+    paddingLeft: 16,
   },
 });
 
@@ -38,11 +52,19 @@ function TextInput({
 }) {
   const [highlight, setHighlight] = useState(false);
 
+  console.log(error);
+
   return (
-    <View style={styles.root}>
-      <Text style={styles.label}>{label}</Text>
+    <View style={[styles.root, error ? styles.rootError : {}]}>
+      <Text style={[styles.label, error ? styles.errorLabel : {}]}>
+        {label}
+      </Text>
       <RNTextInput
-        style={[styles.input, highlight ? styles.inputHighlight : {}]}
+        style={[
+          styles.input,
+          error ? styles.inputError : {},
+          highlight ? styles.inputHighlight : {},
+        ]}
         value={value}
         onFocus={(e) => {
           setHighlight(true);
@@ -56,6 +78,7 @@ function TextInput({
           onBlur && onBlur();
         }}
       />
+      {error ? <Text style={styles.errorMessage}>{error?.message}</Text> : null}
     </View>
   );
 }

@@ -4,8 +4,12 @@ import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 import Entypo from "@expo/vector-icons/Entypo";
 import { NavigationContainer } from "@react-navigation/native";
+import { QueryClientProvider, QueryClient } from "react-query";
 
 import MainNavigator from "./src/navigation/MainNavigator";
+import AuthProvider from "./src/providers/AuthProvider";
+
+const client = new QueryClient();
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -37,9 +41,13 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer onReady={onLayoutRootView}>
-      <StatusBar style="auto" />
-      <MainNavigator />
-    </NavigationContainer>
+    <QueryClientProvider client={client}>
+      <AuthProvider>
+        <NavigationContainer onReady={onLayoutRootView}>
+          <StatusBar style="auto" />
+          <MainNavigator />
+        </NavigationContainer>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }

@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import RegisterScreen from "../screens/RegisterScreen";
 import LoginScreen from "../screens/LoginScreen";
 import Onboarding from "../screens/Onboarding";
+import { useAuth } from "../providers/AuthProvider";
 
 import ROUTES from "../constants/routes";
 
@@ -18,6 +19,8 @@ const styles = StyleSheet.create({
 const Stack = createNativeStackNavigator();
 
 function MainNavigator() {
+  const { auth } = useAuth();
+
   return (
     <Stack.Navigator
       initialRouteName={ROUTES.MAIN.ONBOARDING}
@@ -26,10 +29,20 @@ function MainNavigator() {
         contentStyle: styles.contentStyle,
       }}
     >
-      <Stack.Screen name={ROUTES.MAIN.ONBOARDING} component={Onboarding} />
-      <Stack.Screen name={ROUTES.MAIN.REGISTER} component={RegisterScreen} />
-      <Stack.Screen name={ROUTES.MAIN.LOGIN} component={LoginScreen} />
-      <Stack.Screen name={ROUTES.HOME.INDEX} component={HomeNavigator} />
+      {!auth ? (
+        <>
+          <Stack.Screen name={ROUTES.MAIN.ONBOARDING} component={Onboarding} />
+          <Stack.Screen
+            name={ROUTES.MAIN.REGISTER}
+            component={RegisterScreen}
+          />
+          <Stack.Screen name={ROUTES.MAIN.LOGIN} component={LoginScreen} />
+        </>
+      ) : (
+        <>
+          <Stack.Screen name={ROUTES.HOME.INDEX} component={HomeNavigator} />
+        </>
+      )}
     </Stack.Navigator>
   );
 }
