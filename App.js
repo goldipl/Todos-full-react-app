@@ -1,9 +1,11 @@
-import {useState, useEffect, useCallback} from 'react';
+import { useState, useEffect, useCallback } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import * as SplashScreen from 'expo-splash-screen'
-import * as Font from 'expo-font';
-import Entypo from '@expo/vector-icons/Entypo'
+import * as SplashScreen from "expo-splash-screen";
+import * as Font from "expo-font";
+import Entypo from "@expo/vector-icons/Entypo";
+import { NavigationContainer } from "@react-navigation/native";
+
+import MainNavigator from "./src/navigation/MainNavigator";
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -11,43 +13,31 @@ export default function App() {
   useEffect(() => {
     async function prepare() {
       try {
-        await SplashScreen.preventAutoHideAsync()
+        await SplashScreen.preventAutoHideAsync();
         await Font.loadAsync(Entypo.font);
-      }
-      catch (error) {
-        console.warn(error)
+      } catch (error) {
+        console.warn(error);
       } finally {
-        setAppIsReady(true)
+        setAppIsReady(true);
       }
     }
-    prepare()
-  }, [])
+    prepare();
+  }, []);
 
   const onLayoutRootView = useCallback(async () => {
-    if(appIsReady) {
-     await SplashScreen.hideAsync()
+    if (appIsReady) {
+      await SplashScreen.hideAsync();
     }
-  }, [appIsReady])
+  }, [appIsReady]);
 
-
-  if(!appIsReady) {
+  if (!appIsReady) {
     return null;
   }
 
   return (
-    <View style={styles.container} onLayout={onLayoutRootView}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <Entypo name={"forward"} size={30}/>
+    <NavigationContainer onReady={onLayoutRootView}>
       <StatusBar style="auto" />
-    </View>
+      <MainNavigator />
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
