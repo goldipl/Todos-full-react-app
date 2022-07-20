@@ -46,7 +46,7 @@ function OnboardingScreen({ navigation }) {
       </View>
       <Illustration />
       <View>
-        <Text style={styles.title}>Organize your work and life</Text>
+        <Text style={styles.title}>Organize your work and life and more!</Text>
         <Text style={styles.subTitle}>
           Become focused, organized, and calm with Alk Todos. The world’s #1
           to-do list app.
